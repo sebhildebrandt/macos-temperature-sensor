@@ -86,9 +86,9 @@ This library is used by one of my other libraries [systeminformation][systeminfo
 | - cpu | cpu max temperature |
 | - soc | soc avg temperature |
 | - gpu | max gpu temperature |
-| - cpuDieTemps | all cpu die temperature points |
-| - probeGroupsTemps | all probe groups temperature points |
-| - gpuDieTemps | all gpu die temperature points |
+| - cpuDieTemps | array of all cpu die temperature points |
+| - probeGroupsTemps | array of all probe groups temperature points |
+| - gpuDieTemps | array of all gpu die temperature points |
 
 This library is supposed to only work on macOS, apple silicon processors
 
