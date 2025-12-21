@@ -1,5 +1,5 @@
 {
-	"name": "mac-temperature-sensor",
+	"name": "macos-temperature-sensor",
 	"version": "1.0.0",
 	"main": "index.js",
 	"gypfile": true,
