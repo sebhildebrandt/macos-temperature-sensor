@@ -78,7 +78,7 @@ Written by Sebastian Hildebrandt [sebhildebrandt](https://github.com/sebhildebra
 
 ## Copyright Information
 
-macOS are registered trademarks of Apple Inc., Node.js is a trademark of OpenJS Foundation.,
+macOS are registered trademarks of Apple Inc., Node.js is a trademark of OpenJS Foundation.
 All other trademarks are the property of their respective owners.
 
 ## License [![MIT license][license-img]][license-url]
