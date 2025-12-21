@@ -1,0 +1,40 @@
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
+# MacOS
+.DS_Store
+.Spotlight-V100
+.Trashes
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# NPM
+node_modules
+npm-debug.log
+npm*
+*.gz
+
+# Other
+*_conflict-
+.notes.txt
+.idea
+*.ipr
+*.iws
+.*.swp
+.svn
+.hg
+CVS
