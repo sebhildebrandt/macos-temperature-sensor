@@ -14,12 +14,31 @@ This small library captures CPU temperature on macOS, all values are in degree C
 ### Installation
 
 ```bash
-$ npm install macos-temperature-sensor --save
+$ npm install macos-temperature-sensor
+```
+
+
+### Using this library with Deno:
+
+Make sure, that your deno.json has set the following:
+```
+{
+  ...
+  "nodeModulesDir": "auto",
+  ...
+}
+```
+
+Install the package with
+
+```bash
+$ deno install --allow-scripts=npm:macos-temperature-sensor
+$ deno add npm:macos-temperature-sensor
 ```
 
 ### Usage
 
-Here a small example how to use this library:
+Here a small example how to use this library `index.js`:
 
 ```js
 const macosTemp = require('macos-temperature-sensor');
@@ -28,6 +47,21 @@ let temperature = macosTemp.temperature();
 console.log('CPU temperature:');
 console.log(temperature);
 ```
+
+Then run it with `node index.js`
+
+In Deno it would be `index.ts`:
+
+```js
+import macosTemp from 'macos-temperature-sensor';
+
+let temperature = macosTemp.temperature();
+console.log('CPU temperature:');
+console.log(temperature);
+```
+
+Then run it with `deno run -A test.ts`
+
 
 ## News and Changes
 
