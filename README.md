@@ -33,6 +33,7 @@ console.log(temperature);
 
 ### Latest Activity
 
+- Version 1.0.1: fix lib index reference
 - Version 1.0.0: initial release
 
 If you have comments, suggestions & reports, please feel free to contact me!
