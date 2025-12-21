@@ -1,7 +1,7 @@
 {
 	"name": "macos-temperature-sensor",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "lib/index.js",
 	"gypfile": true,
 	"os": [
 		"darwin"

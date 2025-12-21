@@ -24,7 +24,7 @@ Here a small example how to use this library:
 ```js
 const macosTemp = require('macos-temperature-sensor');
 
-let snapshot = macosTemp.temperature();
+let temperature = macosTemp.temperature();
 console.log('CPU temperature:');
 console.log(temperature);
 ```
