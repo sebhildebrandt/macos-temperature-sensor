@@ -1,4 +1,4 @@
-const macTemp = require("../src/index.js");
+const macTemp = require("../lib/index.js");
 
 console.log("mac-temperature-sensor version:", macTemp.version());
 

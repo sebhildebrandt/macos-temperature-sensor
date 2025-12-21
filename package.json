@@ -24,7 +24,6 @@
 	"scripts": {
 		"install": "node-gyp rebuild",
 		"build": "node-gyp rebuild",
-		"testxx": "node -e \"const m=require('./build/Release/mac_temp_native.node'); console.log(m.snapshot()); console.log(m.listSensors().slice(0,5));\"",
 		"test": "node test/test.js"
 	},
 	"dependencies": {}

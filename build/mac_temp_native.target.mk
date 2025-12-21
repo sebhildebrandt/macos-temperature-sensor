@@ -111,8 +111,8 @@ INCS_Release := \
 	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/v8/include
 
 OBJS := \
-	$(obj).target/$(TARGET)/src/addon.o \
-	$(obj).target/$(TARGET)/src/temps.o
+	$(obj).target/$(TARGET)/lib/src/addon.o \
+	$(obj).target/$(TARGET)/lib/src/temps.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)
