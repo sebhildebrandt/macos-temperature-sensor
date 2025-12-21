@@ -517,7 +517,7 @@
     "userconfig": "/Users/shildebrandt/.npmrc",
     "init_module": "/Users/shildebrandt/.npm-init.js",
     "globalconfig": "/Users/shildebrandt/.nvm/versions/node/v24.11.1/etc/npmrc",
-    "local_prefix": "/Users/shildebrandt/Projekte/open-source-projects/mac-temp-sensor",
+    "local_prefix": "/Users/shildebrandt/Projekte/open-source-projects/mac-temperature-sensor",
     "global_prefix": "/Users/shildebrandt/.nvm/versions/node/v24.11.1"
   }
 }
