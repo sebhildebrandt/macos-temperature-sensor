@@ -60,7 +60,7 @@ console.log('CPU temperature:');
 console.log(temperature);
 ```
 
-Then run it with `deno run -A test.ts`
+Then run it with `deno run -A index.ts`
 
 
 ## News and Changes
