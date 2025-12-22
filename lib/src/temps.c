@@ -13,12 +13,10 @@ typedef void* IOHIDEventRef;
 #define kIOHIDEventTypeTemperature 15
 #endif
 
-// IOHIDEventFieldBase(type) is usually (type << 16). We'll mirror that.
 static inline uint32_t IOHIDEventFieldBase_local(uint32_t type) {
   return (type << 16);
 }
 
-// Function pointer types (opaque, header-less)
 typedef IOHIDEventSystemClientRef (*pIOHIDEventSystemClientCreate)(CFAllocatorRef allocator);
 typedef CFArrayRef (*pIOHIDEventSystemClientCopyServices)(IOHIDEventSystemClientRef client);
 
@@ -27,7 +25,6 @@ typedef IOHIDEventRef (*pIOHIDServiceClientCopyEvent)(IOHIDServiceClientRef serv
 
 typedef double (*pIOHIDEventGetFloatValue)(IOHIDEventRef event, uint32_t field);
 
-// Resolved symbols
 static pIOHIDEventSystemClientCreate      fClientCreate = NULL;
 static pIOHIDEventSystemClientCopyServices fCopyServices = NULL;
 static pIOHIDServiceClientCopyProperty     fCopyProperty = NULL;
@@ -37,7 +34,6 @@ static pIOHIDEventGetFloatValue            fGetFloatValue = NULL;
 static int resolve_hid_symbols(void) {
   if (fClientCreate) return 1; // already resolved
 
-  // These symbols live in IOKit.framework. We open it explicitly.
   void* h = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_LAZY);
   if (!h) return 0;
 
@@ -70,7 +66,6 @@ static double read_temp_from_service(IOHIDServiceClientRef sc) {
 
   double v = fGetFloatValue(ev, IOHIDEventFieldBase_local(kIOHIDEventTypeTemperature));
 
-  // IOHIDEventRef is a CFType, so CFRelease is valid
   CFRelease((CFTypeRef)ev);
   return v;
 }
@@ -80,7 +75,7 @@ int mt_read_snapshot(mt_snapshot_t* out) {
   memset(out, 0, sizeof(*out));
 
   if (!resolve_hid_symbols()) {
-    return 100; // missing runtime symbols (very unlikely on macOS)
+    return 100;
   }
 
   IOHIDEventSystemClientRef client = fClientCreate(kCFAllocatorDefault);
@@ -99,7 +94,6 @@ int mt_read_snapshot(mt_snapshot_t* out) {
     return 4;
   }
 
-  // Count services that at least have a Product string
   size_t cap = 0;
   for (CFIndex i = 0; i < n; i++) {
     IOHIDServiceClientRef sc = (IOHIDServiceClientRef)CFArrayGetValueAtIndex(services, i);

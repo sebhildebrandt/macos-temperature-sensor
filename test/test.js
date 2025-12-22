@@ -1,6 +1,6 @@
 const macTemp = require("../lib/index.js");
 
-console.log("mac-temperature-sensor version:", macTemp.version());
+console.log("mac-temperature-sensor library version:", macTemp.version());
 
 try {
 	const snapshot = macTemp.temperature();

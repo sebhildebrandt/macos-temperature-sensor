@@ -65,7 +65,7 @@ Then run it with `deno run -A index.ts`
 
 #### Sample output:
 
-```json
+```
 {
   cpu: 45.832000732421875,
   soc: 45.34083271026611,
