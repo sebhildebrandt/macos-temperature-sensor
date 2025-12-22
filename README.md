@@ -9,14 +9,15 @@ Mac OS Temperature Sensor library for [node.js][nodejs-url]
 
 ## Quick Start
 
-This small library captures CPU temperature on macOS, all values are in degree Celsius. This library is intended to be used server side (not within a browser) and is designed to work with apple silicon processors.
+This small library captures CPU temperature on macOS (Apple silicon processors), all values are in degree Celsius. This library is intended to be used server side (not within a browser) and is designed to work on ARM based systems.
+
+This library is a replacement for our old [osx-temperature-sensor][osx-temp-npm-url] package (which was designed to work on intel based machines).
 
 ### Installation
 
 ```bash
 $ npm install macos-temperature-sensor
 ```
-
 
 ### Using this library with Deno:
 
@@ -41,7 +42,7 @@ $ deno add npm:macos-temperature-sensor
 Here a small example how to use this library `index.js`:
 
 ```js
-const macosTemp = require('macos-temperature-sensor');
+const macosTemp = require('macos-temperature-sensor');v
 
 let temperature = macosTemp.temperature();
 console.log('CPU temperature:');
@@ -62,13 +63,45 @@ console.log(temperature);
 
 Then run it with `deno run -A index.ts`
 
+#### Sample output:
+
+```json
+{
+  cpu: 45.832000732421875,
+  soc: 45.34083271026611,
+  gpu: 45.42668151855469,
+  cpuDieTemps: [
+    45.832000732421875, 45.121612548828125,
+     45.21040344238281, 45.121612548828125,
+    45.121612548828125,  45.21040344238281,
+    ...
+  ],
+  probeGroupsTemps: [
+    45.56561279296875,
+    45.56561279296875,
+    45.476806640625,
+    ...
+  ],
+  gpuDieTemps: [
+    40.06523132324219,  34.63139343261719,
+    45.02667236328125, 44.929351806640625,
+    44.70109558105469,  41.27174377441406,
+    ...
+  ]
+}
+```
 
 ## News and Changes
 
 ### Latest Activity
 
-- Version 1.0.1: fix lib index reference
-- Version 1.0.0: initial release
+
+| Version | Date       | Comment                                                                                             |
+| ------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| 1.0.3      | 22.12.2025 | doc improvements                            |
+| 1.0.2      | 21.12.2025 | added TS typings, doc improvements          |
+| 1.0.1      | 21.12.2025 | fix lib index reference                     |
+| 1.0.0      | 21.12.2025 | initial release                             |
 
 If you have comments, suggestions & reports, please feel free to contact me!
 
@@ -161,3 +194,4 @@ All other trademarks are the property of their respective owners.
 
 [systeminformation-npm-url]: https://npmjs.org/package/systeminformation
 [systeminformation-github-url]: https://github.com/sebhildebrandt/systeminformation
+[osx-temp-npm-url]: https://www.npmjs.com/package/osx-temperature-sensor
