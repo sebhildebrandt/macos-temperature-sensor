@@ -98,6 +98,7 @@ Then run it with `deno run -A index.ts`
 
 | Version | Date       | Comment                                                                                             |
 | ------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| 1.0.4      | 24.12.2025 | fix docs                            |
 | 1.0.3      | 22.12.2025 | doc improvements                            |
 | 1.0.2      | 21.12.2025 | added TS typings, doc improvements          |
 | 1.0.1      | 21.12.2025 | fix lib index reference                     |
@@ -115,7 +116,7 @@ This library is used by one of my other libraries [systeminformation][systeminfo
 | Function        | Comments |
 | --------------- | -------- |
 | macosTemp.version() | library version (no callback/promise) |
-| macosTemp.cpuTemperature(cb) | CPU temperature (if sensors is installed) in Celsius |
+| macosTemp.temperature() | CPU temperature (if sensors is installed) in Celsius |
 | - cpu | cpu max temperature |
 | - soc | soc avg temperature |
 | - gpu | max gpu temperature |
@@ -146,7 +147,7 @@ Written by Sebastian Hildebrandt [sebhildebrandt](https://github.com/sebhildebra
 
 ## Copyright Information
 
-macOS are registered trademarks of Apple Inc., Node.js is a trademark of OpenJS Foundation.
+Apple and macOS are registered trademarks of Apple Inc., Node.js is a trademark of OpenJS Foundation.
 All other trademarks are the property of their respective owners.
 
 ## License [![MIT license][license-img]][license-url]
