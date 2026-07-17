@@ -24,12 +24,6 @@ static napi_value js_snapshot(napi_env env, napi_callback_info info) {
   napi_value obj;
   napi_create_object(env, &obj);
 
-  napi_value pAvg, eAvg;
-  napi_create_double(env, s.p_core_avg_c, &pAvg);
-  napi_create_double(env, s.e_core_avg_c, &eAvg);
-  napi_set_named_property(env, obj, "pCoreAvgC", pAvg);
-  napi_set_named_property(env, obj, "eCoreAvgC", eAvg);
-
   napi_value arr;
   napi_create_array_with_length(env, (size_t)s.sensor_count, &arr);
 

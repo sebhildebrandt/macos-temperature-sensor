@@ -2,9 +2,9 @@
 
 Mac OS Temperature Sensor library for [node.js][nodejs-url]
 
-  [![NPM Version][npm-image]][npm-url]
-  [![NPM Downloads][downloads-image]][downloads-url]
-  [![Git Issues][issues-img]][issues-url]
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Git Issues][issues-img]][issues-url]
 [![MIT license][license-img]][license-url]
 
 ## Quick Start
@@ -22,6 +22,7 @@ $ npm install macos-temperature-sensor
 ### Using this library with Deno:
 
 Make sure, that your deno.json has set the following:
+
 ```
 {
   ...
@@ -42,10 +43,10 @@ $ deno add npm:macos-temperature-sensor
 Here a small example how to use this library `index.js`:
 
 ```js
-const macosTemp = require('macos-temperature-sensor');v
+const macosTemp = require("macos-temperature-sensor");
 
 let temperature = macosTemp.temperature();
-console.log('CPU temperature:');
+console.log("CPU temperature:");
 console.log(temperature);
 ```
 
@@ -54,10 +55,10 @@ Then run it with `node index.js`
 In Deno it would be `index.ts`:
 
 ```js
-import macosTemp from 'macos-temperature-sensor';
+import * as macosTemp from "macos-temperature-sensor";
 
 let temperature = macosTemp.temperature();
-console.log('CPU temperature:');
+console.log("CPU temperature:");
 console.log(temperature);
 ```
 
@@ -95,36 +96,37 @@ Then run it with `deno run -A index.ts`
 
 ### Latest Activity
 
-
-| Version | Date       | Comment                                                                                             |
-| ------- | ---------- | --------------------------------------------------------------------------------------------------- |
-| 1.0.4      | 24.12.2025 | fix docs                            |
-| 1.0.3      | 22.12.2025 | doc improvements                            |
-| 1.0.2      | 21.12.2025 | added TS typings, doc improvements          |
-| 1.0.1      | 21.12.2025 | fix lib index reference                     |
-| 1.0.0      | 21.12.2025 | initial release                             |
+| Version | Date       | Comment                                                     |
+| ------- | ---------- | ----------------------------------------------------------- |
+| 2.0.0   | 17.07.2026 | GPU temperature via SMC (Apple M5), bug fixes, code cleanup |
+| 1.0.4   | 24.12.2025 | fix docs                                                    |
+| 1.0.3   | 22.12.2025 | doc improvements                                            |
+| 1.0.2   | 21.12.2025 | added TS typings, doc improvements                          |
+| 1.0.1   | 21.12.2025 | fix lib index reference                                     |
+| 1.0.0   | 21.12.2025 | initial release                                             |
 
 If you have comments, suggestions & reports, please feel free to contact me!
 
 This library is used by one of my other libraries [systeminformation][systeminformation-github-url], also available via [github][systeminformation-github-url] and [npm][systeminformation-npm-url]
 
-
 ## Reference
 
 ### Function Reference
 
-| Function        | Comments |
-| --------------- | -------- |
-| macosTemp.version() | library version (no callback/promise) |
+| Function                | Comments                                             |
+| ----------------------- | ---------------------------------------------------- |
+| macosTemp.version()     | library version (no callback/promise)                |
 | macosTemp.temperature() | CPU temperature (if sensors is installed) in Celsius |
-| - cpu | cpu max temperature |
-| - soc | soc avg temperature |
-| - gpu | max gpu temperature |
-| - cpuDieTemps | array of all cpu die temperature points |
-| - probeGroupsTemps | array of all probe groups temperature points |
-| - gpuDieTemps | array of all gpu die temperature points |
+| - cpu                   | cpu max temperature                                  |
+| - soc                   | soc avg temperature                                  |
+| - gpu                   | max gpu temperature                                  |
+| - cpuDieTemps           | array of all cpu die temperature points              |
+| - probeGroupsTemps      | array of all probe groups temperature points         |
+| - gpuDieTemps           | array of all gpu die temperature points              |
 
 This library is supposed to only work on macOS, apple silicon processors
+
+GPU die temperatures are read via IOHID (`PMU tdev*` sensors, up to M4) or via SMC (`Tg*` keys) on chips like the M5 that no longer expose GPU sensors through IOHID.
 
 ## Known Issues
 
@@ -133,7 +135,6 @@ I am happy to discuss any comments and suggestions. Please feel free to contact 
 ## Comments
 
 If you have ideas or comments, please do not hesitate to contact me.
-
 
 Happy monitoring!
 
@@ -152,47 +153,42 @@ All other trademarks are the property of their respective owners.
 
 ## License [![MIT license][license-img]][license-url]
 
->The [`MIT`][license-url] License (MIT)
+> The [`MIT`][license-url] License (MIT)
 >
->Copyright &copy; 2025 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
+> Copyright &copy; 2026 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
 >
->Permission is hereby granted, free of charge, to any person obtaining a copy
->of this software and associated documentation files (the "Software"), to deal
->in the Software without restriction, including without limitation the rights
->to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
->copies of the Software, and to permit persons to whom the Software is
->furnished to do so, subject to the following conditions:
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
 >
->The above copyright notice and this permission notice shall be included in
->all copies or substantial portions of the Software.
+> The above copyright notice and this permission notice shall be included in
+> all copies or substantial portions of the Software.
 >
->THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
->IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
->FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
->AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
->LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
->OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
->THE SOFTWARE.
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> THE SOFTWARE.
 >
->Further details see [LICENSE](LICENSE) file.
-
+> Further details see [LICENSE](LICENSE) file.
 
 [npm-image]: https://img.shields.io/npm/v/macos-temperature-sensor.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/macos-temperature-sensor
 [downloads-image]: https://img.shields.io/npm/dm/macos-temperature-sensor.svg?style=flat-square
 [downloads-url]: https://npmjs.org/package/macos-temperature-sensor
-
 [license-url]: https://github.com/sebhildebrandt/macos-temperature-sensor/blob/master/LICENSE
 [license-img]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
 [npmjs-license]: https://img.shields.io/npm/l/macos-temperature-sensor.svg?style=flat-square
 [changelog-url]: https://github.com/sebhildebrandt/macos-temperature-sensor/blob/master/CHANGELOG.md
-
 [nodejs-url]: https://nodejs.org/en/
 [docker-url]: https://www.docker.com/
-
 [issues-img]: https://img.shields.io/github/issues/sebhildebrandt/macos-temperature-sensor.svg?style=flat-square
 [issues-url]: https://github.com/sebhildebrandt/macos-temperature-sensor/issues
-
 [systeminformation-npm-url]: https://npmjs.org/package/systeminformation
 [systeminformation-github-url]: https://github.com/sebhildebrandt/systeminformation
 [osx-temp-npm-url]: https://www.npmjs.com/package/osx-temperature-sensor

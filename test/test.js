@@ -1,10 +1,10 @@
-const macTemp = require("../lib/index.js");
+const macTemp = require('../lib/index.js');
 
-console.log("mac-temperature-sensor library version:", macTemp.version());
+console.log('mac-temperature-sensor library version:', macTemp.version());
 
 try {
-	const snapshot = macTemp.temperature();
-	console.log("Temperature snapshot:", snapshot);
+  const snapshot = macTemp.temperature();
+  console.log('Temperature snapshot:', snapshot);
 } catch (error) {
-	console.error("Error retrieving temperature:", error);
+  console.error('Error retrieving temperature:', error);
 }

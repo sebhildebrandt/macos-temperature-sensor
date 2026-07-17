@@ -49,13 +49,13 @@ CFLAGS_OBJC_Debug :=
 CFLAGS_OBJCC_Debug :=
 
 INCS_Debug := \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/include/node \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/src \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/openssl/config \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/openssl/openssl/include \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/uv/include \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/zlib \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/v8/include
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/include/node \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/src \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/openssl/config \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/openssl/openssl/include \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/uv/include \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/zlib \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/v8/include
 
 DEFS_Release := \
 	'-DNODE_GYP_MODULE_NAME=mac_temp_native' \
@@ -102,13 +102,13 @@ CFLAGS_OBJC_Release :=
 CFLAGS_OBJCC_Release :=
 
 INCS_Release := \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/include/node \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/src \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/openssl/config \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/openssl/openssl/include \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/uv/include \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/zlib \
-	-I/Users/shildebrandt/Library/Caches/node-gyp/24.11.1/deps/v8/include
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/include/node \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/src \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/openssl/config \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/openssl/openssl/include \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/uv/include \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/zlib \
+	-I/Users/shildebrandt/Library/Caches/node-gyp/24.16.0/deps/v8/include
 
 OBJS := \
 	$(obj).target/$(TARGET)/lib/src/addon.o \

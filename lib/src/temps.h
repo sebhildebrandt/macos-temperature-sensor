@@ -11,8 +11,6 @@ typedef struct {
 } mt_sensor_t;
 
 typedef struct {
-  double p_core_avg_c;
-  double e_core_avg_c;
   size_t sensor_count;
   mt_sensor_t* sensors;
 } mt_snapshot_t;
