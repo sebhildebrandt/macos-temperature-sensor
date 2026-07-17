@@ -1,6 +1,6 @@
 {
   "name": "macos-temperature-sensor",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "CPU/GPU temperature sensor library for macOS on Apple Silicon",
   "license": "MIT",
   "main": "lib/index.js",
