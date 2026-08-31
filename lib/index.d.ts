@@ -12,3 +12,13 @@ export interface TemperatureReading {
 }
 
 export function temperature(): TemperatureReading;
+
+export interface FanReading {
+  label: string;
+  rpm: number;
+  min: number | null;
+  max: number | null;
+  pwm: number | null;
+}
+
+export function fans(): FanReading[];

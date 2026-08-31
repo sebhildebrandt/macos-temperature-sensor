@@ -8,3 +8,10 @@ try {
 } catch (error) {
   console.error('Error retrieving temperature:', error);
 }
+
+try {
+  const fans = macTemp.fans();
+  console.log('Fans:', fans);
+} catch (error) {
+  console.error('Error retrieving fans:', error);
+}

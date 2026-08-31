@@ -92,12 +92,28 @@ Then run it with `deno run -A index.ts`
 }
 ```
 
+#### Fans:
+
+```js
+const macosTemp = require("macos-temperature-sensor");
+
+console.log(macosTemp.fans());
+```
+
+```
+[
+  { label: 'Fan 1', rpm: 2319, min: 2317, max: 7826, pwm: 0.04 },
+  { label: 'Fan 2', rpm: 2503, min: 2317, max: 7826, pwm: 3.38 }
+]
+```
+
 ## News and Changes
 
 ### Latest Activity
 
 | Version | Date       | Comment                                                     |
 | ------- | ---------- | ----------------------------------------------------------- |
+| 2.1.0   | 31.08.2026 | fan speeds via SMC (`fans()`)                                |
 | 2.0.0   | 17.07.2026 | GPU temperature via SMC (Apple M5), bug fixes, code cleanup |
 | 1.0.4   | 24.12.2025 | fix docs                                                    |
 | 1.0.3   | 22.12.2025 | doc improvements                                            |
@@ -123,10 +139,18 @@ This library is used by one of my other libraries [systeminformation][systeminfo
 | - cpuDieTemps           | array of all cpu die temperature points              |
 | - probeGroupsTemps      | array of all probe groups temperature points         |
 | - gpuDieTemps           | array of all gpu die temperature points              |
+| macosTemp.fans()        | array of fans (empty if the machine has no fans)     |
+| - label                 | fan label e.g. `Fan 1`                               |
+| - rpm                   | current fan speed in rpm                             |
+| - min                   | minimum fan speed in rpm (or null)                   |
+| - max                   | maximum fan speed in rpm (or null)                   |
+| - pwm                   | speed in percent of the min/max range (or null)      |
 
 This library is supposed to only work on macOS, apple silicon processors
 
 GPU die temperatures are read via IOHID (`PMU tdev*` sensors, up to M4) or via SMC (`Tg*` keys) on chips like the M5 that no longer expose GPU sensors through IOHID.
+
+Fan speeds are read via the SMC keys `FNum`, `F<n>Ac`, `F<n>Mn` and `F<n>Mx`. `pwm` is not exposed by the SMC and is derived from the fan's min/max range. Machines without fans (e.g. MacBook Air) return an empty array.
 
 ## Known Issues
 

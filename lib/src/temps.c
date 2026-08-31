@@ -74,6 +74,7 @@ static double read_temp_from_service(IOHIDServiceClientRef sc) {
 #define SMC_FOURCC(a, b, c, d) \
   (((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | ((uint32_t)(c) << 8) | (uint32_t)(d))
 #define SMC_MAX_GPU_KEYS 256
+#define SMC_MAX_FANS 10  // F<n>* keys carry a single digit
 
 typedef struct {
   uint8_t major;
@@ -131,6 +132,43 @@ static double smc_read_flt(uint32_t key) {
   float f;
   memcpy(&f, out.bytes, sizeof(f));
   return (double)f;
+}
+
+// reads any numeric SMC key (flt / ui8 / ui16 / ui32); arm64 only, no fp2e/sp78 legacy formats
+static int smc_read_num(uint32_t key, double* out) {
+  smc_keydata_t in, o;
+  memset(&in, 0, sizeof(in));
+  memset(&o, 0, sizeof(o));
+  in.key = key;
+  in.data8 = SMC_CMD_READ_KEYINFO;
+  if (!smc_call(&in, &o)) return 0;
+
+  uint32_t type = o.keyinfo.data_type;
+  uint32_t size = o.keyinfo.data_size;
+  if (size == 0 || size > sizeof(o.bytes)) return 0;
+
+  smc_keydata_t r;
+  memset(&in, 0, sizeof(in));
+  memset(&r, 0, sizeof(r));
+  in.key = key;
+  in.keyinfo.data_size = size;
+  in.data8 = SMC_CMD_READ_BYTES;
+  if (!smc_call(&in, &r)) return 0;
+
+  if (type == SMC_FOURCC('f', 'l', 't', ' ') && size == 4) {
+    float f;
+    memcpy(&f, r.bytes, sizeof(f));
+    *out = (double)f;
+    return 1;
+  }
+  if (type == SMC_FOURCC('u', 'i', '8', ' ') || type == SMC_FOURCC('u', 'i', '1', '6') ||
+      type == SMC_FOURCC('u', 'i', '3', '2')) {
+    uint32_t v = 0;
+    for (uint32_t i = 0; i < size; i++) v = (v << 8) | r.bytes[i];
+    *out = (double)v;
+    return 1;
+  }
+  return 0;
 }
 
 // discovers GPU die temperature keys ("Tg??", type flt) once; the set is fixed per boot
@@ -299,4 +337,50 @@ void mt_free_snapshot(mt_snapshot_t* s) {
   free(s->sensors);
   s->sensors = NULL;
   s->sensor_count = 0;
+}
+
+int mt_read_fans(mt_fans_t* out) {
+  if (!out) return 1;
+  memset(out, 0, sizeof(*out));
+
+  if (!smc_open()) return 2;
+
+  double count = 0;
+  if (!smc_read_num(SMC_FOURCC('F', 'N', 'u', 'm'), &count)) return 3;
+  size_t n = (count > 0 && count <= SMC_MAX_FANS) ? (size_t)count : 0;
+  if (n == 0) return 0;
+
+  mt_fan_t* fans = (mt_fan_t*)calloc(n, sizeof(mt_fan_t));
+  if (!fans) return 6;
+
+  size_t used = 0;
+  for (size_t i = 0; i < n; i++) {
+    char d = (char)('0' + i);
+    double rpm;
+    if (!smc_read_num(SMC_FOURCC('F', d, 'A', 'c'), &rpm)) continue;
+    if (isnan(rpm) || rpm < 0.0 || rpm > 20000.0) continue;
+
+    double v;
+    fans[used].min = smc_read_num(SMC_FOURCC('F', d, 'M', 'n'), &v) ? v : NAN;
+    fans[used].max = smc_read_num(SMC_FOURCC('F', d, 'M', 'x'), &v) ? v : NAN;
+    fans[used].rpm = rpm;
+    snprintf(fans[used].label, sizeof(fans[used].label), "Fan %d", (int)(i + 1));
+    used++;
+  }
+
+  if (used == 0) {
+    free(fans);
+    return 0;
+  }
+
+  out->fans = fans;
+  out->fan_count = used;
+  return 0;
+}
+
+void mt_free_fans(mt_fans_t* s) {
+  if (!s) return;
+  free(s->fans);
+  s->fans = NULL;
+  s->fan_count = 0;
 }
