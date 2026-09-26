@@ -35,11 +35,12 @@ static pIOHIDServiceClientCopyProperty     fCopyProperty = NULL;
 static pIOHIDServiceClientCopyEvent        fCopyEvent = NULL;
 static pIOHIDEventGetFloatValue            fGetFloatValue = NULL;
 
-static int resolve_hid_symbols(void) {
-  if (fClientCreate) return 1; // already resolved
+static pthread_once_t hid_once = PTHREAD_ONCE_INIT;
+static int hid_ok = 0;
 
+static void hid_init(void) {
   void* h = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_LAZY);
-  if (!h) return 0;
+  if (!h) return;
 
   fClientCreate  = (pIOHIDEventSystemClientCreate)dlsym(h, "IOHIDEventSystemClientCreate");
   fCopyServices  = (pIOHIDEventSystemClientCopyServices)dlsym(h, "IOHIDEventSystemClientCopyServices");
@@ -49,7 +50,13 @@ static int resolve_hid_symbols(void) {
 
   fGetFloatValue = (pIOHIDEventGetFloatValue)dlsym(h, "IOHIDEventGetFloatValue");
 
-  return (fClientCreate && fCopyServices && fCopyProperty && fCopyEvent && fGetFloatValue) ? 1 : 0;
+  hid_ok = fClientCreate && fCopyServices && fCopyProperty && fCopyEvent && fGetFloatValue;
+}
+
+// partial resolution stays a failure; pthread_once guards concurrent first calls
+static int resolve_hid_symbols(void) {
+  pthread_once(&hid_once, hid_init);
+  return hid_ok;
 }
 
 static int cfstring_to_cstr(CFStringRef s, char* out, size_t out_sz) {
