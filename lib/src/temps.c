@@ -75,6 +75,7 @@ static double read_temp_from_service(IOHIDServiceClientRef sc) {
 #define SMC_FOURCC(a, b, c, d) \
   (((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | ((uint32_t)(c) << 8) | (uint32_t)(d))
 #define SMC_MAX_GPU_KEYS 256
+#define SMC_MAX_KEY_INDEX 16384  // sanity cap for #KEY
 #define SMC_MAX_FANS 10  // F<n>* keys carry a single digit
 
 typedef struct {
@@ -183,6 +184,7 @@ static void smc_scan_gpu_keys(void) {
   if (!smc_call(&in, &out)) return;
   uint32_t total = ((uint32_t)out.bytes[0] << 24) | ((uint32_t)out.bytes[1] << 16) |
                    ((uint32_t)out.bytes[2] << 8) | (uint32_t)out.bytes[3];
+  if (total > SMC_MAX_KEY_INDEX) total = SMC_MAX_KEY_INDEX;
 
   for (uint32_t i = 0; i < total && smc_gpu_key_count < SMC_MAX_GPU_KEYS; i++) {
     memset(&in, 0, sizeof(in));
