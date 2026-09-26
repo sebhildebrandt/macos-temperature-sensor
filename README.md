@@ -113,7 +113,8 @@ console.log(macosTemp.fans());
 
 | Version | Date       | Comment                                                     |
 | ------- | ---------- | ----------------------------------------------------------- |
-| 2.1.0   | 31.08.2026 | fan speeds via SMC (`fans()`)                                |
+| 2.1.1   | 26.09.2026 | thread safety fixes, lazy native load, engines node >=16    |
+| 2.1.0   | 31.08.2026 | fan speeds via SMC (`fans()`)                               |
 | 2.0.0   | 17.07.2026 | GPU temperature via SMC (Apple M5), bug fixes, code cleanup |
 | 1.0.4   | 24.12.2025 | fix docs                                                    |
 | 1.0.3   | 22.12.2025 | doc improvements                                            |
