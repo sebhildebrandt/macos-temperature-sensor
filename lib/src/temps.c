@@ -4,6 +4,7 @@
 #include <IOKit/IOKitLib.h>
 #include <dlfcn.h>
 #include <math.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -111,7 +112,7 @@ typedef struct {
 } smc_keydata_t;
 
 static io_connect_t smc_conn = 0;
-static int smc_tried = 0;
+static pthread_once_t smc_once = PTHREAD_ONCE_INIT;
 static uint32_t smc_gpu_keys[SMC_MAX_GPU_KEYS];
 static size_t smc_gpu_key_count = 0;
 
@@ -203,23 +204,23 @@ static void smc_scan_gpu_keys(void) {
   }
 }
 
-static int smc_open(void) {
-  if (smc_conn) return 1;
-  if (smc_tried) return 0;
-  smc_tried = 1;
-
+// runs once per process; worker_threads share these globals
+static void smc_init(void) {
   io_service_t svc = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSMC"));
-  if (!svc) return 0;
+  if (!svc) return;
 
-  kern_return_t kr = IOServiceOpen(svc, mach_task_self(), 0, &smc_conn);
+  io_connect_t conn = 0;
+  kern_return_t kr = IOServiceOpen(svc, mach_task_self(), 0, &conn);
   IOObjectRelease(svc);
-  if (kr != KERN_SUCCESS) {
-    smc_conn = 0;
-    return 0;
-  }
+  if (kr != KERN_SUCCESS) return;
 
+  smc_conn = conn;
   smc_scan_gpu_keys();
-  return 1;
+}
+
+static int smc_open(void) {
+  pthread_once(&smc_once, smc_init);
+  return smc_conn != 0;
 }
 
 int mt_read_snapshot(mt_snapshot_t* out) {
