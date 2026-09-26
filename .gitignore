@@ -4,7 +4,7 @@ pids
 *.seed
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+build/
 
 # MacOS
 .DS_Store
